@@ -1,5 +1,6 @@
 require 'data_mapper'
 require 'sinatra'
+# require 'tag'
 
 env = ENV['RACK_ENV'] || 'development'
 
@@ -28,5 +29,11 @@ class BookmarkManager < Sinatra::Base
     end
     Link.create(:url => url, :title => title, tags: tags)
     redirect to('/')
+  end
+  
+  get '/tags/:text' do
+    tag = Tag.first(text: params[:text])
+    @links = tag ? tag.links : []
+    erb :index
   end
 end
