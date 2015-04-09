@@ -57,7 +57,7 @@ class BookmarkManager < Sinatra::Base
       session[:user_id] = @user.id
       redirect to('/')
     else
-      flash.now[:notice] = @user.errors.full_messages.join(", ")
+      flash.now[:errors] =  @user.errors.full_messages
       erb :'users/new'
     end
   end
