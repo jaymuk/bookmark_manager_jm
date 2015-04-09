@@ -4,6 +4,7 @@ group :test do
   gem 'rspec'
 end
 
+gem 'bcrypt-ruby'
 gem 'capybara'
 gem 'database_cleaner'
 gem 'data_mapper'

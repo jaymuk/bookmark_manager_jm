@@ -1,6 +1,7 @@
 require 'data_mapper'
 require 'sinatra'
-# require 'tag'
+require './lib/user'
+require './lib/helpers'
 
 env = ENV['RACK_ENV'] || 'development'
 
@@ -13,6 +14,10 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 class BookmarkManager < Sinatra::Base
+  include Helpers
+
+  enable :sessions
+  set :session_secret, 'super secret'
 
   set :views, Proc.new { File.join(root, "..", "views") }
   
@@ -35,5 +40,16 @@ class BookmarkManager < Sinatra::Base
     tag = Tag.first(text: params[:text])
     @links = tag ? tag.links : []
     erb :index
+  end
+
+  get '/users/new' do
+    erb :'users/new'
+  end
+
+  post '/users' do
+    user = User.create(email: params[:email],
+                password: params[:password])
+    session[:user_id] = user.id
+    redirect to('/')
   end
 end
