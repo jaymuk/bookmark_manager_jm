@@ -1,5 +1,5 @@
 require 'sinatra'
-require './lib/helpers'
+require './helpers/user_helpers'
 require 'rack-flash'
 
 require_relative 'data_base_setup'
@@ -7,11 +7,12 @@ require_relative 'data_base_setup'
 
 
 class BookmarkManager < Sinatra::Base
-  include Helpers
+  include UserHelpers
 
   enable :sessions
   set :session_secret, 'super secret'
   use Rack::Flash
+  use Rack::MethodOverride
 
   set :views, Proc.new { File.join(root, "..", "views") }
   
@@ -68,5 +69,11 @@ class BookmarkManager < Sinatra::Base
       flash[:errors] = ['The email or password is incorrect']
       erb :'sessions/new'
     end
+  end
+
+  delete '/sessions' do
+    session[:user_id] = nil
+    flash[:errors] = ['Good bye!']
+    redirect to('/sessions/new')
   end
 end
