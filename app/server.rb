@@ -24,6 +24,10 @@ class BookmarkManager < Sinatra::Base
   use TagsController
   use UsersController
   use SessionsController
+
+  get '/forgot/password' do    
+    erb :'forgot/password'
+  end
   
   # get '/' do    
   #   @links = Link.all
