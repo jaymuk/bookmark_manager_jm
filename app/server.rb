@@ -1,20 +1,29 @@
+require_relative 'data_mapper_setup'
 require 'sinatra'
-# require './helpers/user_helpers'
 require 'rack-flash'
-Dir.glob('./app/{helpers,controllers,models}/*.rb').each { |file| require_relative file  }
+Dir.glob('./app/{helpers,controllers,models}/*.rb').each { |file| require file  }
+ # require './app/controllers/application_controller'
+ # require './app/controllers/links_controller'
+ # require './app/controllers/users_controller'
 
 
-require_relative 'data_base_setup'
+
+set :views, Proc.new { File.join(root, "/views") }
 
 class BookmarkManager < Sinatra::Base
-  # include UserHelpers
+
+  include UserHelpers
 
   enable :sessions
   set :session_secret, 'super secret'
   use Rack::Flash
   use Rack::MethodOverride
 
-  # set :views, Proc.new { File.join(root, "..", "views") }
+  use ApplicationController
+  use LinksController
+  use TagsController
+  use UsersController
+  use SessionsController
   
   # get '/' do    
   #   @links = Link.all

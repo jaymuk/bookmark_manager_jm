@@ -1,4 +1,4 @@
-class SessionsController
+class SessionsController < ApplicationController
   get '/sessions/new' do
     erb :'sessions/new'
   end

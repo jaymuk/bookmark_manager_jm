@@ -1,5 +1,5 @@
 require 'spec_helper'
-require './helpers/session_helpers'
+require_relative './helpers/session_helpers'
 
 feature 'User signs up' do
 

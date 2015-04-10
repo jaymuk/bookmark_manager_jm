@@ -1,4 +1,4 @@
-require './lib/data_base_setup'
+require './app/data_mapper_setup'
 
 task :auto_upgrade do
   DataMapper.auto_upgrade!

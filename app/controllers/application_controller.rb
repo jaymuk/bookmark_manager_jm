@@ -1,8 +1,7 @@
-require './helpers/user_helpers'
+require './app/helpers/user_helpers'
 
-class ApplicationController < Sinatra::Base
+class ApplicationController < Sinatra::Application
   include UserHelpers
-  set :views, Proc.new { File.join(root, "..", "views") }
 
   get '/' do    
     @links = Link.all
