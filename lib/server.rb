@@ -1,18 +1,10 @@
-require 'data_mapper'
 require 'sinatra'
 require './lib/helpers'
 require 'rack-flash'
 
-env = ENV['RACK_ENV'] || 'development'
+require_relative 'data_base_setup'
 
-DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
-require './lib/user'
-require './lib/link'
-
-DataMapper.finalize
-
-DataMapper.auto_upgrade!
 
 class BookmarkManager < Sinatra::Base
   include Helpers
